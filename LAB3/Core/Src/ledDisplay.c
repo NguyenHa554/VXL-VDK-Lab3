@@ -105,11 +105,14 @@ void display7SEG(int counter){
 		  }
 	  }
 
+enum LedState{RED, YELLOW, GREEN};
 
+enum LedState state = RED;
 int counter = RED_VALUE;
 
 void resetCountValue(){
 	counter = red_value;
+	state = RED;
 }
 
 void updateMode(){
@@ -133,6 +136,10 @@ int getLed1Value(){
 		case 2:
 			return red_buffer;
 			break;
+		case 3:
+			return yellow_buffer;
+		case 4:
+			return green_buffer;
 		default:
 			break;
 	}
@@ -140,9 +147,47 @@ int getLed1Value(){
 }
 
 void normalMode(){
-	HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, RESET);
 	counter--;
-	if(counter < 0) counter = RED_VALUE;
+	switch(state){
+		case RED:
+			HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, RESET);
+			HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+			HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+			if(counter < 0){
+				counter = yellow_value;
+				state = YELLOW;
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, RESET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+			}
+			break;
+		case YELLOW:
+			HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+			HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, RESET);
+			HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+			if(counter < 0){
+				counter = green_value;
+				state = GREEN;
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, RESET);
+			}
+			break;
+		case GREEN:
+			HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+			HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+			HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, RESET);
+			if(counter < 0){
+				counter = green_value;
+				state = RED;
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, RESET);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+			}
+			break;
+		default:
+			break;
+	}
 }
 
 void ledDisplay(){
@@ -157,6 +202,24 @@ void ledDisplay(){
 		case 2:
 			if(getFlag0()){
 				HAL_GPIO_TogglePin(R1_GPIO_Port, R1_Pin);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+				setTimer0(200);
+			}
+			break;
+		case 3:
+			if(getFlag0()){
+				HAL_GPIO_TogglePin(Y1_GPIO_Port, Y1_Pin);
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+				setTimer0(200);
+			}
+			break;
+		case 4:
+			if(getFlag0()){
+				HAL_GPIO_TogglePin(G1_GPIO_Port, G1_Pin);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
 				setTimer0(200);
 			}
 			break;
