@@ -12,16 +12,40 @@ enum ButtonState buttonState[3] = {NORMAL};
 
 
 void uprateHoldValue(){
-	if(mode == 2){
-		red_buffer++;
-		if(red_buffer > 99)	red_buffer = 0;
+	switch(mode){
+		case 2:
+			red_buffer++;
+			if(red_buffer > 99)	red_buffer = 0;
+			break;
+		case 3:
+			yellow_buffer++;
+			if(yellow_buffer > 99) yellow_buffer = 0;
+			break;
+		case 4:
+			green_buffer++;
+			if(green_buffer > 99) green_buffer = 0;
+			break;
+		default:
+			break;
 	}
+
 }
 
 void setValue(){
-	if(mode == 2){
-		red_value = red_buffer;
+	switch(mode){
+		case 2:
+			red_value = red_buffer;
+			break;
+		case 3:
+			yellow_value = yellow_buffer;
+			break;
+		case 4:
+			green_value = green_buffer;
+			break;
+		default:
+			break;
 	}
+
 }
 
 void uprateValue(){
@@ -31,16 +55,16 @@ void uprateValue(){
 				buttonState[1] = PRESSED;
 				uprateHoldValue();
 			}
+			if(isButtonHold()){
+				buttonState[1] = HOLD;
+				uprateHoldValue();
+			}
 			break;
 		case PRESSED:
 			if(!isButton2Pressed()){
 				buttonState[1] = NORMAL;
 			}
 
-			if(isButtonHold()){
-				buttonState[1] = HOLD;
-				uprateHoldValue();
-			}
 			break;
 		case HOLD:
 			if(!isButtonHold()){

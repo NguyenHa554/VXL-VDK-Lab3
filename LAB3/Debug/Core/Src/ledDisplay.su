@@ -1,7 +1,8 @@
 ledDisplay.c:10:6:display7SEG	16	static
-ledDisplay.c:111:6:resetCountValue	4	static
-ledDisplay.c:115:6:updateMode	8	static
-ledDisplay.c:128:5:getLed1Value	4	static
-ledDisplay.c:142:6:normalMode	8	static
-ledDisplay.c:148:6:ledDisplay	8	static
-ledDisplay.c:168:6:update7SEG	8	static
+ledDisplay.c:116:6:resetCountValue	4	static
+ledDisplay.c:123:6:updateMode	8	static
+ledDisplay.c:136:5:getLed1Value	4	static
+ledDisplay.c:154:5:getLed2Value	4	static
+ledDisplay.c:172:6:normalMode	8	static
+ledDisplay.c:258:6:ledDisplay	8	static
+ledDisplay.c:305:6:update7SEG	8	static
