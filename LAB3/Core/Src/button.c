@@ -49,7 +49,7 @@ int isButtonHold(){
 	return 0;
 }
 
-int timeKeyReg[3] = {200, 50, 200};
+int timeKeyReg[3] = {200, 200, 200};
 
 
 void button_reading(){

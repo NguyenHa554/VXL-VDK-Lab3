@@ -16,6 +16,8 @@
 #define YELLOW_VALUE 3
 #define GREEN_VALUE 6
 
+
+
 extern int mode;
 extern int red_value, yellow_value, green_value;
 extern int red_buffer, yellow_buffer, green_buffer;
