@@ -7,4 +7,3 @@ timer.c:66:5:getFlag0	4	static
 timer.c:70:5:getFlag1	4	static
 timer.c:74:5:getFlag2	4	static
 timer.c:78:5:getFlag3	4	static
-timer.c:82:6:HAL_TIM_PeriodElapsedCallback	16	static

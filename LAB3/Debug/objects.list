@@ -1,3 +1,4 @@
+"./Core/Src/Scheduler.o"
 "./Core/Src/button.o"
 "./Core/Src/fsm_manual.o"
 "./Core/Src/global.o"

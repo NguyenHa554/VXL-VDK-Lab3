@@ -11,11 +11,12 @@
 #include "timer.h"
 #include "button.h"
 #include "main.h"
+#include "Scheduler.h"
+#include "ledDisplay.h"
 
 #define RED_VALUE 9
 #define YELLOW_VALUE 3
 #define GREEN_VALUE 6
-
 
 
 extern int mode;

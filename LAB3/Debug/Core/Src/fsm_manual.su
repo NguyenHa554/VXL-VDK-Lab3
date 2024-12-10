@@ -1,3 +1,3 @@
-fsm_manual.c:14:6:uprateHoldValue	4	static
-fsm_manual.c:34:6:setValue	4	static
-fsm_manual.c:51:6:uprateValue	8	static
+fsm_manual.c:25:6:uprateHoldValue	4	static
+fsm_manual.c:45:6:setValue	4	static
+fsm_manual.c:62:6:fsm_manual	8	static

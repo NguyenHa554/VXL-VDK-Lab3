@@ -22,10 +22,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "timer.h"
+//#include "timer.h"
 #include "button.h"
 #include "ledDisplay.h"
 #include "fsm_manual.h"
+#include "Scheduler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,17 +98,25 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer0(1);
-  setTimer1(1);
+//  setTimer0(1);
+//  setTimer1(1);
+
+  SCH_Add_Task(fsm_settings, 1, 10);
+  SCH_Add_Task(fsm_manual, 0, 50);
+//  SCH_Add_Task(updateMode, 0, 50);
+
+  SCH_Add_Task(fsm_automatic, 0, 1000);
+
   while (1)
   {
-	  updateMode();
-	  if(getFlag1()){
-		  update7SEG();
-		  setTimer1(1);
-	  }
-	  ledDisplay();
-	  uprateValue();
+	  SCH_Dispatch_Tasks();
+//	  updateMode();
+//	  if(getFlag1()){
+//		  update7SEG();
+//		  setTimer1(1);
+//	  }
+//	  ledDisplay();
+//	  uprateValue();
 
     /* USER CODE END WHILE */
 
@@ -247,7 +256,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+//	timer_run();
+	button_reading();
+	SCH_Update();
+}
 /* USER CODE END 4 */
 
 /**

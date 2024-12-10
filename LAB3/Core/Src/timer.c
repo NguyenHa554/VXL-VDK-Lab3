@@ -79,9 +79,6 @@ int getFlag3(){
 	return flag3;
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	timer_run();
-	button_reading();
-}
+
 
 

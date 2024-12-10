@@ -13,7 +13,8 @@
 
 
 void uprateHoldValue();
-void uprateValue();
+//void uprateValue();
+void fsm_manual();
 void setValue();
 
 #endif /* INC_FSM_MANUAL_H_ */

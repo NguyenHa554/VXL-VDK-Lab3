@@ -10,6 +10,17 @@
 enum ButtonState{NORMAL, PRESSED, HOLD};
 enum ButtonState buttonState[3] = {NORMAL};
 
+//
+//void updateMode(){
+//	if(isButton1Pressed() == 1){
+//			mode++;
+//			if(mode > 4){
+//				mode = 1;
+//				resetCountValue();
+//			}
+//
+//		}
+//}
 
 void uprateHoldValue(){
 	switch(mode){
@@ -48,7 +59,28 @@ void setValue(){
 
 }
 
-void uprateValue(){
+void fsm_manual(){
+	switch(buttonState[0]){
+		case NORMAL:
+			if(isButton1Pressed() == 1){
+				buttonState[0] = PRESSED;
+				mode++;
+				if(mode > 4){
+					mode = 1;
+					resetCountValue();
+				}
+
+			}
+			break;
+		case PRESSED:
+			if(!isButton1Pressed()){
+				buttonState[0] = NORMAL;
+			}
+			break;
+		default:
+			break;
+	}
+
 	switch(buttonState[1]){
 		case NORMAL:
 			if(isButton2Pressed() == 1){
