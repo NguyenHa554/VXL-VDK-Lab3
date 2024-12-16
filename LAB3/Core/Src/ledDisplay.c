@@ -254,6 +254,106 @@ void normalMode(){
 			break;
 	}
 }
+void ledDisplay(){
+	switch(mode){
+		case 1:
+			if(getFlag0()){
+				normalMode();
+				setTimer0(100);
+			}
+
+			break;
+		case 2:
+			if(getFlag0()){
+				HAL_GPIO_TogglePin(R1_GPIO_Port, R1_Pin);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+				HAL_GPIO_TogglePin(R2_GPIO_Port, R2_Pin);
+				HAL_GPIO_WritePin(Y2_GPIO_Port, Y2_Pin, SET);
+				HAL_GPIO_WritePin(G2_GPIO_Port, G2_Pin, SET);
+				setTimer0(200);
+			}
+			break;
+		case 3:
+			if(getFlag0()){
+				HAL_GPIO_TogglePin(Y1_GPIO_Port, Y1_Pin);
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, SET);
+				HAL_GPIO_TogglePin(Y2_GPIO_Port, Y2_Pin);
+				HAL_GPIO_WritePin(R2_GPIO_Port, R2_Pin, SET);
+				HAL_GPIO_WritePin(G2_GPIO_Port, G2_Pin, SET);
+				setTimer0(200);
+			}
+			break;
+		case 4:
+			if(getFlag0()){
+				HAL_GPIO_TogglePin(G1_GPIO_Port, G1_Pin);
+				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, SET);
+				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, SET);
+				HAL_GPIO_TogglePin(G2_GPIO_Port, G2_Pin);
+				HAL_GPIO_WritePin(Y2_GPIO_Port, Y2_Pin, SET);
+				HAL_GPIO_WritePin(R2_GPIO_Port, R2_Pin, SET);
+				setTimer0(200);
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+void update7SEG(){
+	static int scan = 0;
+	switch(scan){
+		case 0:
+			HAL_GPIO_WritePin(MODE_GPIO_Port, MODE_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, RESET);
+			display7SEG(getLed1Value() / 10);
+			scan = 1;
+			break;
+		case 1:
+			HAL_GPIO_WritePin(MODE_GPIO_Port, MODE_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, RESET);
+			display7SEG(getLed1Value() % 10);
+			scan = 2;
+			break;
+		case 2:
+			HAL_GPIO_WritePin(MODE_GPIO_Port, MODE_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, SET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, RESET);
+			display7SEG(getLed2Value() / 10);
+			scan = 3;
+			break;
+		case 3:
+			HAL_GPIO_WritePin(MODE_GPIO_Port, MODE_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, SET);
+			display7SEG(getLed2Value() % 10);
+			scan = 4;
+			break;
+
+		case 4:
+			HAL_GPIO_WritePin(MODE_GPIO_Port, MODE_Pin, SET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, RESET);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, RESET);
+			display7SEG(mode);
+			scan = 0;
+			break;
+		default:
+			break;
+	}
+}
 
 void update7SEG(){
 	static int scan = 0;
